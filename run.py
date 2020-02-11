@@ -2,10 +2,7 @@
 
 #change this line to run the app that you want to run
 #from db_connector.sample import app
-<<<<<<< HEAD
 #from starter_website.webapp import webapp
-=======
->>>>>>> f2fef2b4a6565c2aca4aa8dba33b058188f7ea63
 from hockeystats.app import app
 #for example, the above line tells to run the sample db connection app in db_connector/ directory
 
