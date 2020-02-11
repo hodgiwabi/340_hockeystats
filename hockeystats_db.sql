@@ -46,3 +46,7 @@ CREATE TABLE `penalties` (
 INSERT INTO `teams` VALUES (1, 'Wolves'), (2, 'Badgers');
 
 INSERT INTO `games` VALUES (1, 1, 2, '2020-02-10', '21:30');
+
+INSERT INTO `players` VALUES (1, 'Jim', 'Halpert', 11, 1);
+
+INSERT INTO `penalties` VALUES (1, 'Hooking', 2);

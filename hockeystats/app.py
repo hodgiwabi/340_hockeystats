@@ -5,7 +5,9 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return "<i>Are you looking for /teams, /games, /players, /penalties ?</i>"
+    return render_template("layouts/main.html",
+                           navbar=render_template("layouts/navbar.html"),
+                           body="<i>Are you looking for /teams, /games, /players, or /penalties ?")
 
 @app.route('/teams')
 def teams():
