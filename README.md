@@ -8,11 +8,11 @@ Flask<sup>[1]</sup> is a Python micro framework for building web applications wh
 
 ## Overview
 
-In general things will be very similar to how you deploy a NodeJS app. There are a few important things to note in terms of Python and Flask on the Engineering server. 
+In general things will be very similar to how you deploy a NodeJS app. There are a few important things to note in terms of Python and Flask on the Engineering server.
 
-The first is that your engineering account is __**not**__ preconfigured with the required demo applications so you will need to get those yourself. 
+The first is that your engineering account is __**not**__ preconfigured with the required demo applications so you will need to get those yourself.
 
-The next is that _the only way you will be able to see your site is if you are on the OSU VPN or you are physically connected to the on campus internet_. If you are not connected to the VPN you will not be able to access your site. You can find information on connecting to the VPN [here](http://oregonstate.edu/helpdocs/osu-applications/offered-apps/virtual-private-network-vpn). 
+The next is that _the only way you will be able to see your site is if you are on the OSU VPN or you are physically connected to the on campus internet_. If you are not connected to the VPN you will not be able to access your site. You can find information on connecting to the VPN [here](http://oregonstate.edu/helpdocs/osu-applications/offered-apps/virtual-private-network-vpn).
 
 The other piece is that your MySQL database that you will be using will need to be made for you. This is usually done as part of a class and your instructor will provide you with the appropriate addresses and credentials to access it.
 
@@ -33,7 +33,7 @@ Note that this repository has 2 webapps:
 
 Both use the database dump bsg_sample.sql for demonstration.
 
-This command will clone all the class files from the class Git repository into that directory you created (~/cs340/). 
+This command will clone all the class files from the class Git repository into that directory you created (~/cs340/).
 
 
 ## Making Required Changes
@@ -43,7 +43,7 @@ First you should go to the `CS340_starter_flask_app` repository folder and setup
 ```bash
 cd CS340_starter_flask_app
 bash
-virtualenv venv -p $(which python3) 
+virtualenv venv -p $(which python3)
 source ./venv/bin/activate
 pip3 install --upgrade pip
 pip install -r requirements.txt
@@ -53,7 +53,7 @@ This will create an virtual environment named `venv` and install the required Py
 
 Next you will need to tweak some files to work with the engineering setup. Because you would have your own database, a few template values will  need to be replaced to point to your database.
 
-In particular, inside the current directory `CS340_starter_flask_app` there is a file called `db_credentials.py.sample`. Rename this file to `db_credentials.py` file and put your actual database credentials inside it. 
+In particular, inside the current directory `CS340_starter_flask_app` there is a file called `db_credentials.py.sample`. Rename this file to `db_credentials.py` file and put your actual database credentials inside it.
 
 You need to edit the file. It should look like the following code with the curly brackets and their contents replaced with the appropriate content:
 
@@ -79,7 +79,7 @@ With that file renamed to `db_credentials.py` and the proper credentials added, 
 
 ## Running the Flask Application!
 
-Make sure you are still inside the `CS340_starter_flask_app` directory. 
+Make sure you are still inside the `CS340_starter_flask_app` directory.
 
 ```bash
 source ./venv/bin/activate
@@ -91,7 +91,7 @@ python -m flask run -h 0.0.0.0 -p 8042 --reload
 
 Now, your website should be accessible at http://flipN.engr.oregonstate.edu:YOUR_PORT_NUMBER
 
-To verify that your server is running, a Hello World page will be visible at `/hello`, while the a READ implementation page can be found at `/browse_bsg_people`. 
+To verify that your server is running, a Hello World page will be visible at `/hello`, while the a READ implementation page can be found at `/browse_bsg_people`.
 
 So you would go to http://flipN.engr.oregonstate.edu:YOUR_PORT_NUMBER/hello or similar.
 
@@ -110,7 +110,7 @@ Finally, is the topic of persistence. How to ensure that your app keeps running 
 To do that, we use [gunicorn](https://gunicorn.org/) as follows:
 
 ```bash
-gunicorn run:webapp -b 0.0.0.0:YOUR_PORT_NUMBER -D 
+gunicorn run:webapp -b 0.0.0.0:YOUR_PORT_NUMBER -D
 ```
 
 The -D runs the gunicorn process in background.
@@ -119,7 +119,7 @@ There are a lot of other tools you can use, such as [run with a production serve
 ) or [deploy in a standalone WSGI Containers using uWSGI](http://flask.pocoo.org/docs/1.0/deploying/wsgi-standalone/), etc.  
 
 
-### How to kill an old running gunicorn process ? 
+### How to kill an old running gunicorn process ?
 
 You would have to find your process on the right flip server by running
 
