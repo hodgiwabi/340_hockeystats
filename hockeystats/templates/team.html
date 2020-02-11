@@ -1,5 +1,27 @@
 <div id="team-container">
-    <h1>Teams:</h1>
 
-    <div
+    <form>
+      <div class="form-group">
+        <label for="addTeam">Add Team</label>
+        <input type="email" class="form-control" id="addTeam" aria-describedby="emailHelp">
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+    <form>
+        <div class="form-group">
+            <label for="removeTeam">Remove Team</label>
+            <input type="email" class="form-control" id="removeTeam" aria-describedby="emailHelp">
+        </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+    <h1>Teams:</h1>
+    <div class="list-group">
+        {% for r in rows %}
+            <a href="#" class="list-group-item list-group-item-action">
+                {{ r[1]}}
+            </a>
+        {% endfor %}
+    </div>
 </div>
