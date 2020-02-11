@@ -29,3 +29,11 @@ def test_database_connection():
     query = "SELECT * from teams;"
     result = execute_query(db_connection, query)
     return render_template('db_test.html', rows=result)
+
+@app.route('/scheudle')
+def display_schedule():
+    print("Querying database for teams and games")
+    db_connection = connect_to_database()
+    query = "SELECT teamName FROM teams RIGHT JOIN games GROUP BY gameTime;"
+    result = execute_query(db_connection, query)
+    return render_template('db_test.html', rows=result)
