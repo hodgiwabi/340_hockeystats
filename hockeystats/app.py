@@ -28,7 +28,7 @@ def games():
                            body=render_template("games.html", rows=result))
 
 @app.route('/players')
-def games():
+def players():
     print("Querying database for Players")
     db_connection = connect_to_database()
     query = "SELECT playerFName, playerLName, playerNumber FROM players;"
@@ -38,7 +38,7 @@ def games():
                            body=render_template("players.html", rows=result))
 
 @app.route('/penalties')
-def games():
+def penalties():
     print("Querying database for Penalties")
     db_connection = connect_to_database()
     query = "SELECT penaltyType FROM penalties;"
