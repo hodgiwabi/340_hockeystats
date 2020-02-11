@@ -2,6 +2,7 @@
 --Tobias Hodges & Greg Sanchez
 
 DROP TABLE IF EXISTS games;
+DROP TABLE IF EXISTS penalties;
 DROP TABLE IF EXISTS players;
 DROP TABLE IF EXISTS teams;
 
@@ -34,8 +35,6 @@ CREATE TABLE `players` (
   UNIQUE KEY `playerName` (`playerFName`, `playerLName`),
   CONSTRAINT `players_ibfk_1` FOREIGN KEY (`playerTeamID`) REFERENCES `teams` (`teamID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-DROP TABLE IF EXISTS `penalties`
 
 CREATE TABLE `penalties` (
   `penaltyID` int(11) AUTO_INCREMENT NOT NULL,
