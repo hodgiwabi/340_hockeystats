@@ -1,0 +1,35 @@
+<div id="penalty-container">
+
+    <form>
+      <div class="form-group">
+        <label for="addPenalty">Add Penalty</label>
+        <input type="email" class="form-control" id="addPenalty" aria-describedby="emailHelp">
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+    <form>
+        <div class="form-group">
+            <label for="updatePenalty">Update Penalty</label>
+            <input type="email" class="form-control" id="updatePenalty" aria-describedby="emailHelp">
+        </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+    <form>
+        <div class="form-group">
+            <label for="removePenalty">Remove Penalty</label>
+            <input type="email" class="form-control" id="removePenalty" aria-describedby="emailHelp">
+        </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+    <h1>Penalties:</h1>
+    <div class="list-group">
+        {% for r in rows %}
+            <a href="#" class="list-group-item list-group-item-action">
+                {{ r[1]}}
+            </a>
+        {% endfor %}
+    </div>
+</div>
