@@ -1,22 +1,17 @@
 from flask import Flask, render_template
-from jinja2 import Environment, PackageLoader, select_autoescape
 from db_connector.db_connector import connect_to_database, execute_query
 
 app = Flask(__name__)
 
-env = Environment(
-    loader=PackageLoader('340_hockeystats', 'templates'),
-    autoescape=select_autoescape(['html', 'xml'])
-)
-
-# main = env.get_template("index.html")
-
-#the route is what you will type in browser
-@app.route('/hello')
-#the name of this function is just a cosmetic thing
-def hello():
-    #this is the output returned to browser
-    return "Hello world!"
+@app.route('/teams')
+def teams():
+    print("Executing a sample query on the database using the credentials from db_credentials.py")
+    db_connection = connect_to_database()
+    query = "SELECT * from teams;"
+    result = execute_query(db_connection, query)
+    return render_template("layouts/main.html",
+                           navbar=render_template("layouts/navbar.html"),
+                           body=render_template("team.html", rows=result))
 
 @app.route('/')
 def index():
