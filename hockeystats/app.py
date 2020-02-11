@@ -3,32 +3,46 @@ from db_connector.db_connector import connect_to_database, execute_query
 
 app = Flask(__name__)
 
+@app.route('/')
+def index():
+    return "<i>Are you looking for /teams, /games, /players, /penalties ?</i>"
+
 @app.route('/teams')
 def teams():
-    print("Executing a sample query on the database using the credentials from db_credentials.py")
+    print("Querying the database for Teams")
     db_connection = connect_to_database()
-    query = "SELECT * from teams;"
+    query = "SELECT teamName FROM teams;"
     result = execute_query(db_connection, query)
     return render_template("layouts/main.html",
                            navbar=render_template("layouts/navbar.html"),
-                           body=render_template("team.html", rows=result))
+                           body=render_template("teams.html", rows=result))
 
-@app.route('/')
-def index():
-    return "<i>Are you looking for /db-test or /hello ?</i>"
-
-@app.route('/db-test')
-def test_database_connection():
-    print("Executing a sample query on the database using the credentials from db_credentials.py")
+@app.route('/games')
+def games():
+    print("Querying database for Games")
     db_connection = connect_to_database()
-    query = "SELECT * from teams;"
+    query = "SELECT homeTeamID, awayTeamID, gameDate, gameTime FROM games;"
     result = execute_query(db_connection, query)
-    return render_template('db_test.html', rows=result)
+    return render_template("layouts/main.html",
+                           navbar=render_template("layouts/navbar.html"),
+                           body=render_template("games.html", rows=result))
 
-@app.route('/scheudle')
-def display_schedule():
-    print("Querying database for teams and games")
+@app.route('/players')
+def games():
+    print("Querying database for Players")
     db_connection = connect_to_database()
-    query = "SELECT teamName FROM teams RIGHT JOIN games GROUP BY gameTime;"
+    query = "SELECT playerFName, playerLName, playerNumber FROM players;"
     result = execute_query(db_connection, query)
-    return render_template('db_test.html', rows=result)
+    return render_template("layouts/main.html",
+                           navbar=render_template("layouts/navbar.html"),
+                           body=render_template("players.html", rows=result))
+
+@app.route('/penalties')
+def games():
+    print("Querying database for Penalties")
+    db_connection = connect_to_database()
+    query = "SELECT penaltyType FROM penalties;"
+    result = execute_query(db_connection, query)
+    return render_template("layouts/main.html",
+                           navbar=render_template("layouts/navbar.html"),
+                           body=render_template("penalties.html", rows=result))
