@@ -40,7 +40,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/nfs/stak/users/sanchegr/classes/CS340/CS340_starter_flask_app/venv"
+VIRTUAL_ENV="/nfs/stak/users/hodgesto/340_hockeystats/venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

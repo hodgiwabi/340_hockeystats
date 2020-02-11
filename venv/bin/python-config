@@ -1,4 +1,4 @@
-#!/nfs/stak/users/sanchegr/classes/CS340/CS340_starter_flask_app/venv/bin/python
+#!/nfs/stak/users/hodgesto/340_hockeystats/venv/bin/python
 
 import sys
 import getopt
