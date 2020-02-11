@@ -1,6 +1,8 @@
 --MySQL 340_hockeystats hockeystats_db.sql
 --Tobias Hodges & Greg Sanchez
 
+DROP TABLE IF EXISTS games;
+DROP TABLE IF EXISTS players;
 DROP TABLE IF EXISTS teams;
 
 CREATE TABLE `teams` (
@@ -9,8 +11,6 @@ CREATE TABLE `teams` (
   PRIMARY KEY (`teamID`),
   UNIQUE KEY `teamName` (`teamName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-DROP TABLE IF EXISTS games;
 
 CREATE TABLE `games` (
   `gameID` int(11) AUTO_INCREMENT NOT NULL,
@@ -22,6 +22,26 @@ CREATE TABLE `games` (
   UNIQUE KEY `gameTimeDate` (`gameTime`, `gameDate`),
   CONSTRAINT `games_ibfk_1` FOREIGN KEY (`homeTeamID`) REFERENCES `teams` (`teamID`),
   CONSTRAINT `games_ibfk_2` FOREIGN KEY (`awayTeamID`) REFERENCES `teams` (`teamID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `players` (
+  `playerID` int(11) AUTO_INCREMENT NOT NULL,
+  `playerFName` varchar(31) NOT NULL,
+  `playerLName` varchar(31) NOT NULL,
+  `playerNumber` int(11) NOT NULL,
+  `playerTeamID` int(11) NOT NULL,
+  PRIMARY KEY (`playerID`),
+  UNIQUE KEY `playerName` (`playerFName`, `playerLName`),
+  CONSTRAINT `players_ibfk_1` FOREIGN KEY (`playerTeamID`) REFERENCES `teams` (`teamID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `penalties`
+
+CREATE TABLE `penalties` (
+  `penaltyID` int(11) AUTO_INCREMENT NOT NULL,
+  `penaltyType` varchar(31) NOT NULL,
+  `penaltyTime` int(11) NOT NULL,
+  PRIMARY KEY (`penaltyID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `teams` VALUES (1, 'Wolves'), (2, 'Badgers');
