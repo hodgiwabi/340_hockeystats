@@ -1,0 +1,28 @@
+<div id="schedule-container">
+
+    <form>
+      <div class="form-group">
+        <label for="addTeam">Add Game</label>
+        <input type="email" class="form-control" id="addTeam" aria-describedby="emailHelp">
+          <small id="playerHelp" class="form-text text-muted">We'll have more inputs to add a new games's attributes (i.e. the two teams)</small>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+    <form>
+        <div class="form-group">
+            <label for="removeTeam">Remove Game</label>
+            <input type="email" class="form-control" id="removeTeam" aria-describedby="emailHelp">
+        </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+    <h1>Games:</h1>
+    <div class="list-group">
+        {% for r in rows %}
+            <a href="#" class="list-group-item list-group-item-action">
+                {{ r}}
+            </a>
+        {% endfor %}
+    </div>
+</div>
