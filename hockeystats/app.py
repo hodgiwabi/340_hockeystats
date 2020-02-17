@@ -16,7 +16,6 @@ def teams():
     query = "SELECT teamName FROM teams;"
     result = execute_query(db_connection, query)
     return render_template("layouts/main.html",
-                           navbar=render_template("layouts/navbar.html"),
                            body=render_template("teams.html", rows=result))
 
 @app.route('/games')
@@ -26,7 +25,6 @@ def games():
     query = "SELECT homeTeamID, awayTeamID, gameDate, gameTime FROM games;"
     result = execute_query(db_connection, query)
     return render_template("layouts/main.html",
-                           navbar=render_template("layouts/navbar.html"),
                            body=render_template("games.html", rows=result))
 
 @app.route('/players')
@@ -36,7 +34,6 @@ def players():
     query = "SELECT playerFName, playerLName, playerNumber FROM players;"
     result = execute_query(db_connection, query)
     return render_template("layouts/main.html",
-                           navbar=render_template("layouts/navbar.html"),
                            body=render_template("players.html", rows=result))
 
 @app.route('/penalties')
@@ -46,5 +43,4 @@ def penalties():
     query = "SELECT penaltyType FROM penalties;"
     result = execute_query(db_connection, query)
     return render_template("layouts/main.html",
-                           navbar=render_template("layouts/navbar.html"),
                            body=render_template("penalties.html", rows=result))

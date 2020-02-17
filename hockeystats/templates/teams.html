@@ -1,35 +1,61 @@
-<div id="team-container">
+<div id="team-container" class="container">
 
-    <form>
-      <div class="form-group">
-        <label for="addTeam">Add Team</label>
-        <input type="email" class="form-control" id="addTeam" aria-describedby="emailHelp">
-      </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-
-    <form>
-        <div class="form-group">
-            <label for="updateTeam">Update Team</label>
-            <input type="email" class="form-control" id="updateTeam" aria-describedby="emailHelp">
-        </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-
-    <form>
-        <div class="form-group">
-            <label for="removeTeam">Remove Team</label>
-            <input type="email" class="form-control" id="removeTeam" aria-describedby="emailHelp">
-        </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary my-4" data-toggle="modal" data-target="#teamsModal">
+      Alter Teams
+    </button>
 
     <h1>Teams:</h1>
     <div class="list-group">
         {% for r in rows %}
-            <a href="#" class="list-group-item list-group-item-action">
-                {{ r}}
-            </a>
+            <div class="list-item">
+                <a href="#" class="list-group-item list-group-item-action">
+                    {{ r[0] }}
+                </a>
+            </div>
         {% endfor %}
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="teamsModal" tabindex="-1" role="dialog" aria-labelledby="gamesModal" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="addTeam">Add Team</label>
+                <input type="email" class="form-control" id="addTeam" aria-describedby="emailHelp">
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+
+            <form>
+                <div class="form-group">
+                    <label for="updateTeam">Update Team</label>
+                    <input type="email" class="form-control" id="updateTeam" aria-describedby="emailHelp">
+                </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+
+            <form>
+                <div class="form-group">
+                    <label for="removeTeam">Remove Team</label>
+                    <input type="email" class="form-control" id="removeTeam" aria-describedby="emailHelp">
+                </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
     </div>
 </div>

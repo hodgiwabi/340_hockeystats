@@ -1,36 +1,73 @@
-<div id="schedule-container">
+<div id="schedule-container" class="container">
 
-    <form>
-      <div class="form-group">
-        <label for="addTeam">Add Game</label>
-        <input type="email" class="form-control" id="addTeam" aria-describedby="emailHelp">
-          <small id="playerHelp" class="form-text text-muted">We'll have more inputs to add a new games's attributes (i.e. the two teams)</small>
-      </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-
-    <form>
-        <div class="form-group">
-            <label for="updateGame">Update Game</label>
-            <input type="email" class="form-control" id="updateGame" aria-describedby="emailHelp">
-        </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-
-    <form>
-        <div class="form-group">
-            <label for="removeTeam">Remove Game</label>
-            <input type="email" class="form-control" id="removeTeam" aria-describedby="emailHelp">
-        </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary my-4" data-toggle="modal" data-target="#gamesModal">
+      Alter Games
+    </button>
 
     <h1>Games:</h1>
     <div class="list-group">
         {% for r in rows %}
-            <a href="#" class="list-group-item list-group-item-action">
-                {{ r}}
-            </a>
+            <div class="list-item">
+                <a data-toggle="collapse" aria-expanded="false" href="#collapse{{r[0]}}v{{r[1]}}" class="list-group-item list-group-item-action">
+                    {{r[0]}} vs {{r[1]}} - {{r[3]}}
+                </a>
+                <div class="collapse ml-3" id="collapse{{r[0]}}v{{r[1]}}">
+                    <div class="card card-body">
+                        Teams:
+                        <ul>
+                            <li>{{r[0]}}</li>
+                            <li>{{r[1]}}</li>
+                        </ul>
+
+                        Game Start Time: {{r[2]}}
+                    </div>
+                </div>
+            </div>
         {% endfor %}
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="gamesModal" tabindex="-1" role="dialog" aria-labelledby="gamesModal" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="addTeam">Add Game</label>
+                <input type="email" class="form-control" id="addTeam" aria-describedby="emailHelp">
+                  <small id="playerHelp" class="form-text text-muted">We'll have more inputs to add a new games's attributes (i.e. the two teams)</small>
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+
+            <form>
+                <div class="form-group">
+                    <label for="updateGame">Update Game</label>
+                    <input type="email" class="form-control" id="updateGame" aria-describedby="emailHelp">
+                </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+
+            <form>
+                <div class="form-group">
+                    <label for="removeTeam">Remove Game</label>
+                    <input type="email" class="form-control" id="removeTeam" aria-describedby="emailHelp">
+                </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
     </div>
 </div>
