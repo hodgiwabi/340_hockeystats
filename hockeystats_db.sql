@@ -1,11 +1,11 @@
 --MySQL 340_hockeystats hockeystats_db.sql
 --Tobias Hodges & Greg Sanchez
 
+DROP TABLE IF EXISTS infractions;
 DROP TABLE IF EXISTS games;
 DROP TABLE IF EXISTS penalties;
 DROP TABLE IF EXISTS players;
 DROP TABLE IF EXISTS teams;
-DROP TABLE IF EXISTS infractions;
 
 CREATE TABLE `teams` (
   `teamID` int(11) AUTO_INCREMENT NOT NULL,
