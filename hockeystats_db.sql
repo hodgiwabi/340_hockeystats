@@ -5,6 +5,7 @@ DROP TABLE IF EXISTS games;
 DROP TABLE IF EXISTS penalties;
 DROP TABLE IF EXISTS players;
 DROP TABLE IF EXISTS teams;
+DROP TABLE IF EXISTS infractions;
 
 CREATE TABLE `teams` (
   `teamID` int(11) AUTO_INCREMENT NOT NULL,
@@ -43,10 +44,31 @@ CREATE TABLE `penalties` (
   PRIMARY KEY (`penaltyID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `teams` VALUES (1, 'Wolves'), (2, 'Badgers');
+CREATE TABLE `infractions` (
+  `infractionID` int(11) AUTO_INCREMENT NOT NULL,
+  `playerID` int(11) NOT NULL,
+  `penaltyID` int(11) NOT NULL,
+  PRIMARY KEY (`infractionID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `games` VALUES (1, 1, 2, '2020-02-10', '21:30');
+INSERT INTO `teams` VALUES (
+  (1, 'Wolves'),
+  (2, 'Badgers')
+);
 
-INSERT INTO `players` VALUES (1, 'Jim', 'Halpert', 11, 1);
+INSERT INTO `games` VALUES (
+  (1, 1, 2, '2020-02-10', '21:30')
+);
 
-INSERT INTO `penalties` VALUES (1, 'Hooking', 2);
+INSERT INTO `players` VALUES (
+  (1, 'Jim', 'Halpert', 11, 1),
+  (2, 'Pam', 'Anderson', 25, 2)
+);
+
+INSERT INTO `penalties` VALUES (
+  (1, 'Hooking', 2)
+);
+
+INSERT INTO `infractions` VALUES (
+  (1, 1, 1)
+);
