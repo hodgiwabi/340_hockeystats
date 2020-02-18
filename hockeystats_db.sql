@@ -22,8 +22,8 @@ CREATE TABLE `games` (
   `gameTime` TIME NOT NULL,
   PRIMARY KEY (`gameID`),
   UNIQUE KEY `gameTimeDate` (`gameTime`, `gameDate`),
-  CONSTRAINT `games_ibfk_1` FOREIGN KEY (`homeTeamID`) REFERENCES `teams` (`teamID`),
-  CONSTRAINT `games_ibfk_2` FOREIGN KEY (`awayTeamID`) REFERENCES `teams` (`teamID`)
+  CONSTRAINT `games_ibfk_1` FOREIGN KEY (`homeTeamID`) REFERENCES `teams` (`teamID`) ON DELETE CASCADE,
+  CONSTRAINT `games_ibfk_2` FOREIGN KEY (`awayTeamID`) REFERENCES `teams` (`teamID`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `players` (
@@ -34,7 +34,7 @@ CREATE TABLE `players` (
   `playerTeamID` int(11) NOT NULL,
   PRIMARY KEY (`playerID`),
   UNIQUE KEY `playerName` (`playerFName`, `playerLName`),
-  CONSTRAINT `players_ibfk_1` FOREIGN KEY (`playerTeamID`) REFERENCES `teams` (`teamID`)
+  CONSTRAINT `players_ibfk_1` FOREIGN KEY (`playerTeamID`) REFERENCES `teams` (`teamID`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `penalties` (
@@ -48,27 +48,17 @@ CREATE TABLE `infractions` (
   `infractionID` int(11) AUTO_INCREMENT NOT NULL,
   `playerID` int(11) NOT NULL,
   `penaltyID` int(11) NOT NULL,
-  PRIMARY KEY (`infractionID`)
+  PRIMARY KEY (`infractionID`),
+  CONSTRAINT `infractions_ibfk_1` FOREIGN KEY (`playerID`) REFERENCES `players` (`playerID`) ON DELETE CASCADE,
+  CONSTRAINT `infractions_ibfk_2` FOREIGN KEY (`penaltyID`) REFERENCES `penalties` (`penaltyID`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `teams` VALUES (
-  (1, 'Wolves'),
-  (2, 'Badgers')
-);
+INSERT INTO `teams` VALUES (1, 'Wolves'),(2, 'Badgers');
 
-INSERT INTO `games` VALUES (
-  (1, 1, 2, '2020-02-10', '21:30')
-);
+INSERT INTO `games` VALUES (1, 1, 2, '2020-02-10', '21:30');
 
-INSERT INTO `players` VALUES (
-  (1, 'Jim', 'Halpert', 11, 1),
-  (2, 'Pam', 'Anderson', 25, 2)
-);
+INSERT INTO `players` VALUES (1, 'Jim', 'Halpert', 11, 1),(2, 'Pam', 'Anderson', 25, 2);
 
-INSERT INTO `penalties` VALUES (
-  (1, 'Hooking', 2)
-);
+INSERT INTO `penalties` VALUES (1, 'Hooking', 2);
 
-INSERT INTO `infractions` VALUES (
-  (1, 1, 1)
-);
+INSERT INTO `infractions` VALUES (1, 1, 1);
