@@ -49,3 +49,13 @@ def penalties():
     result = execute_query(db_connection, query)
     return render_template("layouts/main.html",
                            body=render_template("penalties.html", rows=result))
+
+
+@app.route('/infractions')
+def penalties():
+    print("Querying database for Infractions")
+    db_connection = connect_to_database()
+    query = "SELECT playerID, penaltyID FROM player_penalties;"
+    result = execute_query(db_connection, query)
+    return render_template("layouts/main.html",
+                           body=render_template("infractions.html", rows=result))
