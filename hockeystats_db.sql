@@ -51,24 +51,12 @@ CREATE TABLE `infractions` (
   PRIMARY KEY (`infractionID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `teams` VALUES (
-  (1, 'Wolves'),
-  (2, 'Badgers')
-);
+INSERT INTO `teams` VALUES (1, 'Wolves'),(2, 'Badgers');
 
-INSERT INTO `games` VALUES (
-  (1, 1, 2, '2020-02-10', '21:30')
-);
+INSERT INTO `games` VALUES (1, 1, 2, '2020-02-10', '21:30');
 
-INSERT INTO `players` VALUES (
-  (1, 'Jim', 'Halpert', 11, 1),
-  (2, 'Pam', 'Anderson', 25, 2)
-);
+INSERT INTO `players` VALUES (1, 'Jim', 'Halpert', 11, 1),(2, 'Pam', 'Anderson', 25, 2);
 
-INSERT INTO `penalties` VALUES (
-  (1, 'Hooking', 2)
-);
+INSERT INTO `penalties` VALUES (1, 'Hooking', 2);
 
-INSERT INTO `infractions` VALUES (
-  (1, 1, 1)
-);
+INSERT INTO `infractions` VALUES (1, 1, 1);
