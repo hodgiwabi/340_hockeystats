@@ -8,57 +8,57 @@ DROP TABLE IF EXISTS players;
 DROP TABLE IF EXISTS teams;
 
 CREATE TABLE `teams` (
-  `teamID` int(11) AUTO_INCREMENT NOT NULL,
-  `teamName` varchar(31) NOT NULL,
-  PRIMARY KEY (`teamID`),
-  UNIQUE KEY `teamName` (`teamName`)
+  `team_id` int(11) AUTO_INCREMENT NOT NULL,
+  `team_name` varchar(31) NOT NULL,
+  PRIMARY KEY (`team_id`),
+  UNIQUE KEY `team_name` (`team_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `games` (
-  `gameID` int(11) AUTO_INCREMENT NOT NULL,
-  `homeTeamID` int(11),
-  `awayTeamID` int(11),
-  `gameDate` DATE NOT NULL,
-  `gameTime` TIME NOT NULL,
-  PRIMARY KEY (`gameID`),
-  UNIQUE KEY `gameTimeDate` (`gameTime`, `gameDate`),
-  CONSTRAINT `games_ibfk_1` FOREIGN KEY (`homeTeamID`) REFERENCES `teams` (`teamID`) ON DELETE CASCADE,
-  CONSTRAINT `games_ibfk_2` FOREIGN KEY (`awayTeamID`) REFERENCES `teams` (`teamID`) ON DELETE CASCADE
+  `game_id` int(11) AUTO_INCREMENT NOT NULL,
+  `home_id` int(11),
+  `away_id` int(11),
+  `game_date` DATE NOT NULL,
+  `game_time` TIME NOT NULL,
+  PRIMARY KEY (`game_id`),
+  UNIQUE KEY `game_time_date` (`game_time`, `game_date`),
+  CONSTRAINT `games_ibfk_1` FOREIGN KEY (`home_id`) REFERENCES `teams` (`team_id`) ON DELETE CASCADE,
+  CONSTRAINT `games_ibfk_2` FOREIGN KEY (`away_id`) REFERENCES `teams` (`team_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `players` (
-  `playerID` int(11) AUTO_INCREMENT NOT NULL,
-  `playerFName` varchar(31) NOT NULL,
-  `playerLName` varchar(31) NOT NULL,
-  `playerNumber` int(11) NOT NULL,
-  `playerTeamID` int(11) NOT NULL,
-  PRIMARY KEY (`playerID`),
-  UNIQUE KEY `playerName` (`playerFName`, `playerLName`),
-  CONSTRAINT `players_ibfk_1` FOREIGN KEY (`playerTeamID`) REFERENCES `teams` (`teamID`) ON DELETE CASCADE
+  `player_id` int(11) AUTO_INCREMENT NOT NULL,
+  `fname` varchar(31) NOT NULL,
+  `lname` varchar(31) NOT NULL,
+  `number` int(11) NOT NULL,
+  `team_id` int(11) NOT NULL,
+  `total_points` int(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`player_id`),
+  UNIQUE KEY `playerName` (`fname`, `lname`),
+  CONSTRAINT `players_ibfk_1` FOREIGN KEY (`team_id`) REFERENCES `teams` (`team_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `penalties` (
-  `penaltyID` int(11) AUTO_INCREMENT NOT NULL,
-  `penaltyType` varchar(31) NOT NULL,
-  `penaltyTime` int(11) NOT NULL,
-  PRIMARY KEY (`penaltyID`)
+  `penalty_id` int(11) AUTO_INCREMENT NOT NULL,
+  `type` varchar(31) NOT NULL,
+  PRIMARY KEY (`penalty_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `infractions` (
-  `infractionID` int(11) AUTO_INCREMENT NOT NULL,
-  `playerID` int(11) NOT NULL,
-  `penaltyID` int(11) NOT NULL,
-  PRIMARY KEY (`infractionID`),
-  CONSTRAINT `infractions_ibfk_1` FOREIGN KEY (`playerID`) REFERENCES `players` (`playerID`) ON DELETE CASCADE,
-  CONSTRAINT `infractions_ibfk_2` FOREIGN KEY (`penaltyID`) REFERENCES `penalties` (`penaltyID`) ON DELETE CASCADE
+  `infraction_id` int(11) AUTO_INCREMENT NOT NULL,
+  `player_id` int(11) NOT NULL,
+  `penalty_id` int(11) NOT NULL,
+  PRIMARY KEY (`infraction_id`),
+  CONSTRAINT `infractions_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`player_id`) ON DELETE CASCADE,
+  CONSTRAINT `infractions_ibfk_2` FOREIGN KEY (`penalty_id`) REFERENCES `penalties` (`penalty_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `teams` VALUES (1, 'Wolves'),(2, 'Badgers');
 
 INSERT INTO `games` VALUES (1, 1, 2, '2020-02-10', '21:30');
 
-INSERT INTO `players` VALUES (1, 'Jim', 'Halpert', 11, 1),(2, 'Pam', 'Anderson', 25, 2);
+INSERT INTO `players` VALUES (1, 'Jim', 'Halpert', 11, 1, 0),(2, 'Pam', 'Anderson', 25, 2, 0);
 
-INSERT INTO `penalties` VALUES (1, 'Hooking', 2);
+INSERT INTO `penalties` VALUES (1, 'Hooking');
 
 INSERT INTO `infractions` VALUES (1, 1, 1);
