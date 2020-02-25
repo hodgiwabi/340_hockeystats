@@ -10,17 +10,18 @@
         {% for r in rows %}
             <div class="list-item">
                 <a data-toggle="collapse" aria-expanded="false" href="#collapse{{r[0]}}v{{r[1]}}" class="list-group-item list-group-item-action">
-                    {{r[0]}} vs {{r[1]}} - {{r[3]}}
+                    <b>Game #{{r[0]}}:</b>
+                    {{r[1]}} vs {{r[2]}} - {{r[4]}}
                 </a>
                 <div class="collapse ml-3" id="collapse{{r[0]}}v{{r[1]}}">
                     <div class="card card-body">
                         Teams:
                         <ul>
-                            <li>{{r[0]}}</li>
                             <li>{{r[1]}}</li>
+                            <li>{{r[2]}}</li>
                         </ul>
 
-                        Game Start Time: {{r[2]}}
+                        Game Start Time: {{r[3]}}
                     </div>
                 </div>
             </div>
@@ -32,40 +33,56 @@
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Modal title</h5>
+            <h5 class="modal-title">Alter Games</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            <form>
+            <form action="/games" method="post" class="my-2 p-2 border border-dark rounded">
               <div class="form-group">
-                <label for="addTeam">Add Game</label>
-                <input type="email" class="form-control" id="addTeam" aria-describedby="emailHelp">
-                  <small id="playerHelp" class="form-text text-muted">We'll have more inputs to add a new games's attributes (i.e. the two teams)</small>
+                  <div class="font-weight-bold">Add Game</div>
+                  <div class="d-inline-flex">
+                      <div class="ml-1">
+                          <label for="teamAdd1">Team #1</label>
+                          <input type="text" class="form-control" id="teamAdd1" name="teamAdd1">
+                      </div>
+
+                      <div class="ml-1">
+                          <label for="teamAdd2">Team #2</label>
+                          <input type="text" class="form-control" id="teamAdd2" name="teamAdd2">
+                      </div>
+                  </div>
+                  <div class="ml-1">
+                        <label for="addDate">Game Date</label>
+                        <input type="datetime-local" class="form-control" id="addDate" name="addDate">
+                  </div>
               </div>
-              <button type="submit" class="btn btn-primary">Submit</button>
+              <button type="submit" value="add" class="btn btn-primary">Add</button>
             </form>
 
-            <form>
-                <div class="form-group">
-                    <label for="updateGame">Update Game</label>
-                    <input type="email" class="form-control" id="updateGame" aria-describedby="emailHelp">
-                </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
+            <form action="/games" method="post" class="my-2 p-2 border border-dark rounded">
+                <div class="form-group p-1">
+                    <div class="font-weight-bold">Update Games</div>
+                    <div class="ml-2 mb-2 small">Only add game_id to remove the game</div>
+                    <label for="gameID">Game ID</label>
+                    <input type="text" class="form-control" id="gameID" name="gameID">
 
-            <form>
-                <div class="form-group">
-                    <label for="removeTeam">Remove Game</label>
-                    <input type="email" class="form-control" id="removeTeam" aria-describedby="emailHelp">
+                    <div class="d-inline-flex">
+                        <div>
+                            <label for="teamUpdate1">Team #1</label>
+                            <input type="text" class="form-control" id="teamUpdate1" name="teamUpdate1">
+                        </div>
+
+                        <div class="ml-1">
+                            <label for="teamUpdate2">Team #2</label>
+                            <input type="text" class="form-control" id="teamUpdate2" name="teamUpdate2">
+                        </div>
+                    </div>
                 </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" value="update" class="btn btn-primary">Update</button>
+                <button type="submit" value="remove" class="btn btn-danger">Remove</button>
             </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
           </div>
         </div>
       </div>
