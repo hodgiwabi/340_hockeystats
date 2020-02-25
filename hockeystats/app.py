@@ -14,7 +14,7 @@ def index():
 def teams():
     print("Querying the database for Teams")
     db_connection = connect_to_database()
-    query = "SELECT teamName FROM teams;"
+    query = "SELECT team_name FROM teams;"
     result = execute_query(db_connection, query)
     return render_template("layouts/main.html",
                            body=render_template("teams.html", rows=result))
@@ -24,7 +24,7 @@ def teams():
 def games():
     print("Querying database for Games")
     db_connection = connect_to_database()
-    query = "SELECT homeTeamID, awayTeamID, gameDate, gameTime FROM games;"
+    query = "SELECT home_id, away_id, game_date, game_time FROM games;"
     result = execute_query(db_connection, query)
     return render_template("layouts/main.html",
                            body=render_template("games.html", rows=result))
@@ -34,7 +34,7 @@ def games():
 def players():
     print("Querying database for Players")
     db_connection = connect_to_database()
-    query = "SELECT playerFName, playerLName, playerNumber FROM players;"
+    query = "SELECT fname, lname, number FROM players;"
     result = execute_query(db_connection, query)
     return render_template("layouts/main.html",
                            body=render_template("players.html", rows=result))
@@ -44,7 +44,7 @@ def players():
 def penalties():
     print("Querying database for Penalties")
     db_connection = connect_to_database()
-    query = "SELECT penaltyType FROM penalties;"
+    query = "SELECT type FROM penalties;"
     result = execute_query(db_connection, query)
     return render_template("layouts/main.html",
                            body=render_template("penalties.html", rows=result))
@@ -54,7 +54,7 @@ def penalties():
 def infractions():
     print("Querying database for Infractions")
     db_connection = connect_to_database()
-    query = "SELECT playerID, penaltyID FROM infractions;"
+    query = "SELECT player_id, penalty_id FROM infractions;"
     result = execute_query(db_connection, query)
     return render_template("layouts/main.html",
                            body=render_template("infractions.html", rows=result))
