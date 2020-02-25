@@ -10,8 +10,7 @@
         {% for r in rows %}
             <div class="list-item">
                 <a data-toggle="collapse" aria-expanded="false" href="#collapse{{r[0]}}v{{r[1]}}" class="list-group-item list-group-item-action">
-                    <b>Game #{{r[0]}}:</b>
-                    {{r[1]}} vs {{r[2]}} - {{r[4]}}
+                    ({{r[0]}}) {{r[1]}} vs {{r[2]}} - {{r[4]}}
                 </a>
                 <div class="collapse ml-3" id="collapse{{r[0]}}v{{r[1]}}">
                     <div class="card card-body">

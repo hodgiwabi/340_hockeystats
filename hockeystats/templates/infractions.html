@@ -10,52 +10,58 @@
         {% for r in rows %}
             <div class="list-item">
                 <a href="#" class="list-group-item list-group-item-action">
-                    {{ r}}
+                    ({{r[0]}}) {{r[1]}}: {{r[2]}}
                 </a>
             </div>
         {% endfor %}
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="infractionModal" tabindex="-1" role="dialog" aria-labelledby="gamesModal" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Modal title</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form>
-              <div class="form-group">
-                <label for="addPenalty">Add Infraction</label>
-                <input type="email" class="form-control" id="addPenalty" aria-describedby="emailHelp">
-              </div>
-              <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-
-            <form>
-                <div class="form-group">
-                    <label for="updatePenalty">Update Infraction</label>
-                    <input type="email" class="form-control" id="updatePenalty" aria-describedby="emailHelp">
+    <div class="modal fade" id="infractionModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Alter Infractions</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
+                <div class="modal-body">
+                    <form action="/infractions" method="post" id="infractionAdd" class="my-2 p-2 border border-dark rounded">
+                        <div class="form-group">
+                            <div class="font-weight-bold">Add Infractions</div>
+                            <div class="d-inline-flex">
+                                <div class="ml-1">
+                                    <label for="infractionPlayerID">Player ID</label>
+                                    <input type="text" class="form-control" id="infractionPlayerID" name="infractionPlayerID">
+                                </div>
+                                <div class="ml-1">
+                                    <label for="infractionPenaltyID">Penalty ID</label>
+                                    <input type="text" class="form-control" id="infractionPenaltyID" name="infractionPenaltyIDs">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
 
-            <form>
-                <div class="form-group">
-                    <label for="removePenalty">Remove Infraction</label>
-                    <input type="email" class="form-control" id="removePenalty" aria-describedby="emailHelp">
+                    <form action="/infractions" method="post" id="infractionUpdate" class="my-2 p-2 border border-dark rounded">
+                        <div class="form-group p-1">
+                            <div class="font-weight-bold">Update Infraction</div>
+                            <div class="ml-2 mb-2 small">Only add Infraction ID to remove the team</div>
+                            <label for="infractionID">Infraction ID</label>
+                            <input type="text" class="form-control w-50" id="infractionID" name="infractionID">
+                            <div>
+                                <label for="infractionUpdatePenalty">New Penalty ID</label>
+                                <input type="text" class="form-control w-50" id="infractionUpdatePenalty" name="infractionUpdatePenalty">
+                            </div>
+                        </div>
+                    </form>
                 </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-          </div>
+                <div class="modal-footer">
+                    <button type="submit" value="add" form="infractionAdd" class="btn btn-primary mr-auto">Add</button>
+                    <button type="submit" value="update" form="infractionUpdate" class="btn btn-primary">Update</button>
+                    <button type="submit" value="remove" form="infractionUpdate" class="btn btn-danger">Remove</button>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
 </div>
