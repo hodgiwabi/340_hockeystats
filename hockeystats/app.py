@@ -1,4 +1,5 @@
 from flask import Flask, render_template
+from flask import request, redirect
 from db_connector.db_connector import connect_to_database, execute_query
 
 app = Flask(__name__)
@@ -20,14 +21,22 @@ def teams():
                            body=render_template("teams.html", rows=result))
 
 
-@app.route('/games')
+@app.route('/games', methods=['POST', 'GET'])
 def games():
     print("Querying database for Games")
     db_connection = connect_to_database()
-    query = "SELECT home_id, away_id, game_date, game_time FROM games;"
-    result = execute_query(db_connection, query)
-    return render_template("layouts/main.html",
-                           body=render_template("games.html", rows=result))
+
+    if request.method == 'GET':
+        query = "SELECT game_id, home_id, away_id, game_date, game_time FROM games;"
+        result = execute_query(db_connection, query)
+        return render_template("layouts/main.html",
+                               body=render_template("games.html", rows=result))
+    elif request.method == 'POST':
+        print("Adding some new game!")
+        query = "SELECT game_id, home_id, away_id, game_date, game_time FROM games;"
+        result = execute_query(db_connection, query)
+        return render_template("layouts/main.html",
+                               body=render_template("games.html", rows=result))
 
 
 @app.route('/players')
