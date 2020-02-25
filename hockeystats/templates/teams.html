@@ -24,45 +24,47 @@
 
     <!-- Modal -->
     <div class="modal fade" id="teamsModal" tabindex="-1" role="dialog" aria-labelledby="gamesModal" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Modal title</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form>
-              <div class="form-group">
-                <label for="addTeam">Add Team</label>
-                <input type="email" class="form-control" id="addTeam" aria-describedby="emailHelp">
-              </div>
-              <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-
-            <form>
-                <div class="form-group">
-                    <label for="updateTeam">Update Team</label>
-                    <input type="email" class="form-control" id="updateTeam" aria-describedby="emailHelp">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Alter Teams</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
+                <div class="modal-body">
+                    <form action="/teams" method="post" id="teamAdd" class="my-2 p-2 border border-dark rounded">
+                        <div class="form-group">
+                            <div class="font-weight-bold">Add Team</div>
+                            <div class="d-inline-flex">
+                                <div class="ml-1">
+                                    <label for="teamName">Team Name</label>
+                                    <input type="text" class="form-control" id="teamName" name="teamName">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
 
-            <form>
-                <div class="form-group">
-                    <label for="removeTeam">Remove Team</label>
-                    <input type="email" class="form-control" id="removeTeam" aria-describedby="emailHelp">
+                    <form action="/teams" method="post" id="teamUpdate" class="my-2 p-2 border border-dark rounded">
+                        <div class="form-group p-1">
+                            <div class="font-weight-bold">Update Teams</div>
+                            <div class="ml-2 mb-2 small">Only add Team ID to remove the team</div>
+                            <label for="teamID">Team ID</label>
+                            <input type="text" class="form-control w-50" id="teamID" name="teamID">
+                            <div>
+                                <label for="teamUpdateName">New Team Name</label>
+                                <input type="text" class="form-control w-50" id="teamUpdateName" name="teamUpdateName">
+                            </div>
+                        </div>
+                    </form>
                 </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-          </div>
+                <div class="modal-footer">
+                    <button type="submit" value="add" form="teamAdd" class="btn btn-primary mr-auto">Add</button>
+                    <button type="submit" value="update" form="teamUpdate" class="btn btn-primary">Update</button>
+                    <button type="submit" value="remove" form="teamUpdate" class="btn btn-danger">Remove</button>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
 
     <!-- Modal -->
