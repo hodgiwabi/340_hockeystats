@@ -24,47 +24,60 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="playersModal" tabindex="-1" role="dialog" aria-labelledby="gamesModal" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Modal title</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-             <form>
-              <div class="form-group">
-                <label for="addTeam">Add Player</label>
-                <input type="email" class="form-control" id="addTeam" aria-describedby="emailHelp">
-                  <small id="playerHelp" class="form-text text-muted">We'll have more inputs to add a new player's attributes (e.g. team, total goals, etc.)</small>
-              </div>
-              <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-
-            <form>
-                <div class="form-group">
-                    <label for="updatePlayer">Update Player</label>
-                    <input type="email" class="form-control" id="updatePlayer" aria-describedby="emailHelp">
+    <div class="modal fade" id="playersModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Alter Players</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
+                <div class="modal-body">
+                    <form action="/players" method="post" id="playerAdd" class="my-2 p-2 border border-dark rounded">
+                        <div class="form-group">
+                            <div class="font-weight-bold">Add Player</div>
+                            <div class="d-inline-flex flex-wrap">
+                                <div class="ml-1">
+                                    <label for="playerFirstName">Player First Name</label>
+                                    <input type="text" class="form-control" id="playerFirstName" name="playerFirstName">
+                                </div>
+                                <div class="ml-1">
+                                    <label for="playerLastName">Player Last Name</label>
+                                    <input type="text" class="form-control" id="playerLastName" name="playerLastName">
+                                </div>
+                                <div class="ml-1">
+                                    <label for="playerNumber">Player Number</label>
+                                    <input type="text" class="form-control" id="playerNumber" name="playerNumber">
+                                </div>
+                                <div class="ml-1">
+                                    <label for="playerTeam">Team ID</label>
+                                    <input type="text" class="form-control" id="playerTeam" name="playerTeam">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
 
-            <form>
-                <div class="form-group">
-                    <label for="removeTeam">Remove Player</label>
-                    <input type="email" class="form-control" id="removeTeam" aria-describedby="emailHelp">
+                    <form action="/players" method="post" id="playerUpdate" class="my-2 p-2 border border-dark rounded">
+                        <div class="form-group p-1">
+                            <div class="font-weight-bold">Update Player</div>
+                            <div class="ml-2 mb-2 small">Only add Player ID to remove the team</div>
+                            <label for="playerID">Player ID</label>
+                            <input type="text" class="form-control w-50" id="playerID" name="playerID">
+                            <div>
+                                <label for="playerUpdateTeamID">New Team ID</label>
+                                <input type="text" class="form-control w-50" id="playerUpdateTeamID" name="playerUpdateTeamID">
+                            </div>
+                        </div>
+                    </form>
                 </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-          </div>
+                <div class="modal-footer">
+                    <button type="submit" value="add" form="playerAdd" class="btn btn-primary mr-auto">Add</button>
+                    <button type="submit" value="update" form="playerUpdate" class="btn btn-primary">Update</button>
+                    <button type="submit" value="remove" form="playerUpdate" class="btn btn-danger">Remove</button>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
 
     <div class="modal fade" id="playersSearchModal" tabindex="-1" role="dialog" aria-labelledby="playersSearchModal" aria-hidden="true">
