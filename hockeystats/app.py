@@ -11,14 +11,22 @@ def index():
                            body="<i>Are you looking for /teams, /games, /players, /penalties, or /infractions ?")
 
 
-@app.route('/teams')
+@app.route('/teams', methods=['POST', 'GET'])
 def teams():
     print("Querying the database for Teams")
     db_connection = connect_to_database()
-    query = "SELECT team_name FROM teams;"
-    result = execute_query(db_connection, query)
-    return render_template("layouts/main.html",
-                           body=render_template("teams.html", rows=result))
+
+    if request.method == 'GET':
+        query = "SELECT team_id, team_name FROM teams;"
+        result = execute_query(db_connection, query)
+        return render_template("layouts/main.html",
+                               body=render_template("teams.html", rows=result))
+    elif request.method == 'POST':
+        print("Adding some new team!")
+        query = "SELECT team_id, team_name FROM teams;"
+        result = execute_query(db_connection, query)
+        return render_template("layouts/main.html",
+                               body=render_template("teams.html", rows=result))
 
 
 @app.route('/games', methods=['POST', 'GET'])
@@ -39,31 +47,55 @@ def games():
                                body=render_template("games.html", rows=result))
 
 
-@app.route('/players')
+@app.route('/players', methods=['POST', 'GET'])
 def players():
     print("Querying database for Players")
     db_connection = connect_to_database()
-    query = "SELECT fname, lname, number FROM players;"
-    result = execute_query(db_connection, query)
-    return render_template("layouts/main.html",
-                           body=render_template("players.html", rows=result))
+
+    if request.method == 'GET':
+        query = "SELECT player_id, fname, lname, number FROM players;"
+        result = execute_query(db_connection, query)
+        return render_template("layouts/main.html",
+                               body=render_template("players.html", rows=result))
+    elif request.method == 'POST':
+        print("Adding some new player!")
+        query = "SELECT player_id, fname, lname, number FROM players;"
+        result = execute_query(db_connection, query)
+        return render_template("layouts/main.html",
+                               body=render_template("players.html", rows=result))
 
 
-@app.route('/penalties')
+@app.route('/penalties', methods=['POST', 'GET'])
 def penalties():
     print("Querying database for Penalties")
     db_connection = connect_to_database()
-    query = "SELECT type FROM penalties;"
-    result = execute_query(db_connection, query)
-    return render_template("layouts/main.html",
-                           body=render_template("penalties.html", rows=result))
+
+    if request.method == 'GET':
+        query = "SELECT penalty_id, type FROM penalties;"
+        result = execute_query(db_connection, query)
+        return render_template("layouts/main.html",
+                               body=render_template("penalties.html", rows=result))
+    elif request.method == 'POST':
+        print("Adding some new penalty!")
+        query = "SELECT penalty_id, type FROM penalties;"
+        result = execute_query(db_connection, query)
+        return render_template("layouts/main.html",
+                               body=render_template("penalties.html", rows=result))
 
 
-@app.route('/infractions')
+@app.route('/infractions', methods=['POST', 'GET'])
 def infractions():
     print("Querying database for Infractions")
     db_connection = connect_to_database()
-    query = "SELECT player_id, penalty_id FROM infractions;"
-    result = execute_query(db_connection, query)
-    return render_template("layouts/main.html",
-                           body=render_template("infractions.html", rows=result))
+
+    if request.method == 'GET':
+        query = "SELECT infraction_id, player_id, penalty_id FROM infractions;"
+        result = execute_query(db_connection, query)
+        return render_template("layouts/main.html",
+                               body=render_template("infractions.html", rows=result))
+    elif request.method == 'POST':
+        print("Adding some new infraction!")
+        query = "SELECT infraction_id, player_id, penalty_id FROM infractions;"
+        result = execute_query(db_connection, query)
+        return render_template("layouts/main.html",
+                               body=render_template("infractions.html", rows=result))
