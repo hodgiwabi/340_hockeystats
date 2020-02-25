@@ -39,7 +39,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <form action="/games" method="post" class="my-2 p-2 border border-dark rounded">
+            <form action="/games" method="post" id="gameAdd" class="my-2 p-2 border border-dark rounded">
               <div class="form-group">
                   <div class="font-weight-bold">Add Game</div>
                   <div class="d-inline-flex">
@@ -58,10 +58,9 @@
                         <input type="datetime-local" class="form-control w-50" id="addDate" name="addDate">
                   </div>
               </div>
-              <button type="submit" value="add" class="btn btn-primary">Add</button>
             </form>
 
-            <form action="/games" method="post" class="my-2 p-2 border border-dark rounded">
+            <form action="/games" method="post" id="gameUpdate" class="my-2 p-2 border border-dark rounded">
                 <div class="form-group p-1">
                     <div class="font-weight-bold">Update Games</div>
                     <div class="ml-2 mb-2 small">Only add Game ID to remove the game</div>
@@ -80,10 +79,14 @@
                         </div>
                     </div>
                 </div>
-                <button type="submit" value="update" class="btn btn-primary">Update</button>
-                <button type="submit" value="remove" class="btn btn-danger">Remove</button>
             </form>
           </div>
+
+            <div class="modal-footer">
+                <button type="submit" value="add" form="gameAdd" class="btn btn-primary mr-auto">Add</button>
+                <button type="submit" value="update" form="gameUpdate" class="btn btn-primary">Update</button>
+                <button type="submit" value="remove" form="gameUpdate" class="btn btn-danger">Remove</button>
+            </div>
         </div>
       </div>
     </div>
