@@ -8,7 +8,7 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     return render_template("layouts/main.html",
-                           body="<i>Are you looking for /teams, /games, /players, /penalties, or /infractions ?")
+                           body="<i>Are you looking for /teams, /games, /players, /penalties, or /infractions ?</i>")
 
 
 @app.route('/teams', methods=['POST', 'GET'])
