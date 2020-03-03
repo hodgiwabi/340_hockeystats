@@ -22,21 +22,21 @@ def teams():
         return render_template("layouts/main.html",
                             body=render_template("teams.html", rows=result))
     elif request.method == 'POST':
-        req = request.form["submit"]
-        if req and req == "search":
-            team_name = request.form['searchTeam']
-            data = [team_name]
-            query = "SELECT team_name FROM teams WHERE team_name = '%s';"
-            result = execute_query(db_connection, query, data)
-            return render_template("layouts/main.html",
-                                   body=render_template("teams.html", rows=result))
-        else:
-            teamName = request.form['teamName']
-            data = [teamName]
-            query = 'INSERT INTO teams (team_name) VALUES (%s);'
-            execute_query(db_connection, query, data)
-            return render_template("layouts/main.html", 
-                                body=render_template("posts/team_post.html", teamName=teamName))
+        # req = request.form["submit"]
+        # if req and req == "search":
+        #     team_name = request.form['searchTeam']
+        #     data = [team_name]
+        #     query = "SELECT team_name FROM teams WHERE team_name = '%s';"
+        #     result = execute_query(db_connection, query, data)
+        #     return render_template("layouts/main.html",
+        #                            body=render_template("teams.html", rows=result))
+        # else:
+        teamName = request.form['teamName']
+        data = [teamName]
+        query = 'INSERT INTO teams (team_name) VALUES (%s);'
+        execute_query(db_connection, query, data)
+        return render_template("layouts/main.html", 
+                            body=render_template("posts/team_post.html", teamName=teamName))
 
 
 @app.route('/games', methods=['POST', 'GET'])
