@@ -90,17 +90,16 @@
             </button>
           </div>
           <div class="modal-body">
-            <form>
+            <form action="/players" method="post" id="playerSearch">
               <div class="form-group">
-                <label for="addTeam">Serach Player</label>
-                <input type="email" class="form-control" id="seachTeam" aria-describedby="emailHelp">
+                <label for="searchPlayer">Search By Number</label>
+                <input type="text" class="form-control" id="searchPlayer" name="searchPlayer">
               </div>
-              <button type="submit" class="btn btn-primary">Submit</button>
             </form>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Search</button>
+            <button type="submit" id="search" name="search" value="search" form="playerSearch" class="btn btn-primary">Search</button>
           </div>
         </div>
       </div>

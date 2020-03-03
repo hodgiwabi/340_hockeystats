@@ -1,5 +1,5 @@
 #!/bin/bash
 source venv/bin/activate
 export FLASK_APP=run.py
-#python -m flask run -h 0.0.0.0 -p 7474 --reload
-gunicorn run:app -b 0.0.0.0:7474 -D
+python -m flask run -h 0.0.0.0 -p 8844 --reload
+#gunicorn run:app -b 0.0.0.0:7474 -D
