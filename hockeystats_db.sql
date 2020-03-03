@@ -1,5 +1,5 @@
---MySQL 340_hockeystats hockeystats_db.sql
---Tobias Hodges & Greg Sanchez
+-- MySQL 340_hockeystats hockeystats_db.sql
+-- Tobias Hodges & Greg Sanchez
 
 DROP TABLE IF EXISTS infractions;
 DROP TABLE IF EXISTS games;

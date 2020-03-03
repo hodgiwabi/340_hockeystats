@@ -24,7 +24,7 @@ def teams():
     elif request.method == 'POST':
         req = request.form["submit"]
         if req and req == "search":
-            team_name = request.form['teamName']
+            team_name = request.form['searchTeam']
             data = [team_name]
             query = "SELECT team_name FROM teams WHERE team_name = '%s';"
             result = execute_query(db_connection, query, data)
