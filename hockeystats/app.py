@@ -47,7 +47,7 @@ def teams():
             msg = "Successfully updated Team: {0}. New Name: {1}".format(tn, tid)
         elif req == "remove":
             tid = request.form["teamID"]
-            query = "DELETE FROM team WHERE team_id= %s;"
+            query = "DELETE FROM teams WHERE team_id= %s;"
             data = [tid]
             execute_query(db_connection, query, data)
             msg = "Successfully removed Team: {0}".format(tid)
@@ -93,7 +93,7 @@ def games():
             msg = "Successfully updated Game: {0}. New Teams: {1} vs {2}".format(gid, tid1, tid2)
         elif req == "remove":
             gid = request.form["gameID"]
-            query = "DELETE FROM teams WHERE team_id= %s"
+            query = "DELETE FROM games WHERE team_id= %s"
             data = [gid]
             execute_query(db_connection, query, data)
             msg = "Successfully removed Game: {0}".format(gid)
@@ -177,7 +177,7 @@ def penalties():
             pen_type = request.form["penaltyUpdateType"]
 
             query = "UPDATE penalties SET type = %s WHERE penalty_id = %s;"
-            data = [pen_id, pen_type]
+            data = [pen_type, pen_id]
             execute_query(db_connection, query, data)
             msg = "Successfully updated Penalty: {0}. New Type: {1}".format(pen_id, pen_type)
         elif req == "remove":
@@ -217,7 +217,7 @@ def infractions():
             pen_id = request.form["infractionUpdatePenalty"]
 
             query = "UPDATE infractions SET penalty_id = %s WHERE infraction_id = %s;"
-            data = [inf_id, pen_id]
+            data = [pen_id, inf_id]
             execute_query(db_connection, query, data)
             msg = "Successfully updated Infraction: {0}. New Penalty: {1}".format(inf_id, pen_id)
         elif req == "remove":
