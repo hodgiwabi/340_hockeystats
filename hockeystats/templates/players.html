@@ -72,9 +72,9 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" id="search" name="add" value="add" form="playerAdd" class="btn btn-primary mr-auto">Add</button>
-                    <button type="submit" value="update" form="playerUpdate" class="btn btn-primary">Update</button>
-                    <button type="submit" value="remove" form="playerUpdate" class="btn btn-danger">Remove</button>
+                    <button type="submit" name="action" value="add" form="playerAdd" class="btn btn-primary mr-auto">Add</button>
+                    <button type="submit" name="action" value="update" form="playerUpdate" class="btn btn-primary">Update</button>
+                    <button type="submit" name="action" value="remove" form="playerUpdate" class="btn btn-danger">Remove</button>
                 </div>
             </div>
         </div>
@@ -90,7 +90,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <form action="/players" method="post" id="playerSearch">
+            <form action="/players" method="get" id="playerSearch">
               <div class="form-group">
                 <label for="searchPlayer">Search By Number</label>
                 <input type="text" class="form-control" id="searchPlayer" name="searchPlayer">
@@ -99,7 +99,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" id="search" name="search" value="search" form="playerSearch" class="btn btn-primary">Search</button>
+            <button type="submit" name="action" value="search" form="playerSearch" class="btn btn-primary">Search</button>
           </div>
         </div>
       </div>

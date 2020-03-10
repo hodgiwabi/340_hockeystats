@@ -59,9 +59,9 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" value="add" form="teamAdd" class="btn btn-primary mr-auto">Add</button>
-                    <button type="submit" value="update" form="teamUpdate" class="btn btn-primary">Update</button>
-                    <button type="submit" value="remove" form="teamUpdate" class="btn btn-danger">Remove</button>
+                    <button type="submit" name="action" value="add" form="teamAdd" class="btn btn-primary mr-auto">Add</button>
+                    <button type="submit" name="action" form="teamUpdate" class="btn btn-primary">Update</button>
+                    <button type="submit" name="action" form="teamUpdate" class="btn btn-danger">Remove</button>
                 </div>
             </div>
         </div>
@@ -78,16 +78,16 @@
             </button>
           </div>
           <div class="modal-body">
-            <form action="/teams" method="post" id="teamSearch">
+            <form action="/teams" method="get" id="teamSearch">
               <div class="form-group">
-                <label for="searchTeam">Add Team</label>
+                <label for="searchTeam">Search</label>
                 <input type="text" class="form-control" id="seachTeam" name="searchTeam">
               </div>
             </form>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" name="search" value="search" form="teamSearch" class="btn btn-primary">Search</button>
+            <button type="submit" name="action" value="search" form="teamSearch" class="btn btn-primary">Search</button>
           </div>
         </div>
       </div>
