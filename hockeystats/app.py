@@ -47,7 +47,7 @@ def teams():
             msg = "Successfully updated Team: {0}. New Name: {1}".format(tn, tid)
         elif req == "remove":
             tid = request.form["teamID"]
-            query = "DELETE FROM team WHERE team_id= %s"
+            query = "DELETE FROM team WHERE team_id= %s;"
             data = [tid]
             execute_query(db_connection, query, data)
             msg = "Successfully removed Team: {0}".format(tid)
@@ -165,39 +165,27 @@ def penalties():
         return render_template("layouts/main.html",
                                body=render_template("penalties.html", rows=result))
     elif request.method == 'POST':
-        ptype = request.form['penaltyType']
-        data = [ptype]
-        query = "INSERT INTO penalties (type) VALUES (%s);"
-        execute_query(db_connection, query, data)
-        return render_template("layouts/main.html",
-                               body=render_template("posts/penalty_post.html", data=data))
-
-    elif request.method == 'POST':
         req = request.form["action"]
         if req == "add":
-            fname = request.form['playerFirstName']
-            lname = request.form['playerLastName']
-            number = request.form['playerNumber']
-            team_id = request.form['playerTeam']
-
-            query = "INSERT INTO players (fname, lname, number, team_id) VALUES (%s, %s, %s, %s);"
-            data = [fname, lname, number, team_id]
+            ptype = request.form['penaltyType']
+            data = [ptype]
+            query = "INSERT INTO penalties (type) VALUES (%s);"
             execute_query(db_connection, query, data)
-            msg = "Successfully Added: {0} {1}, #{2} on Team {3}".format(fname, lname, number, team_id)
+            msg = "Successfully Added Penalty: {0}".format(ptype)
         elif req == "update":
-            pid = request.form["playerID"]
-            tid = request.form["playerUpdateTeamID"]
+            pen_id = request.form["penaltyID"]
+            pen_type = request.form["penaltyUpdateType"]
 
-            query = "UPDATE players SET team_id= %s WHERE player_id= %s;"
-            data = [tid, pid]
+            query = "UPDATE penalties SET type = %s WHERE penalty_id = %s;"
+            data = [pen_id, pen_type]
             execute_query(db_connection, query, data)
-            msg = "Successfully updated Player: {0}. New Team: {1}".format(pid, tid)
+            msg = "Successfully updated Penalty: {0}. New Type: {1}".format(pen_id, pen_type)
         elif req == "remove":
-            pid = request.form["playerID"]
-            query = "DELETE FROM players WHERE player_id= %s"
+            pid = request.form["penaltyID"]
+            query = "DELETE FROM penalties WHERE penalty_id = %s;"
             data = [pid]
             execute_query(db_connection, query, data)
-            msg = "Successfully removed Player: {0}".format(pid)
+            msg = "Successfully removed Penalty: {0}".format(pid)
         else:
             msg = "Invalid call (missing add/update/remove)"
 
@@ -223,7 +211,7 @@ def infractions():
             data = [player_id, penalty_id]
             query = "INSERT INTO infractions (player_id, penalty_id) VALUES (%s, %s);"
             execute_query(db_connection, query, data)
-            msg = "Successfully Added Infraction. Player {0} contains penality {1}".format(player_id, penality_id)
+            msg = "Successfully Added Infraction. Player {0} contains penality {1}".format(player_id, penalty_id)
         elif req == "update":
             inf_id = request.form["infractionID"]
             pen_id = request.form["infractionUpdatePenalty"]
@@ -231,13 +219,13 @@ def infractions():
             query = "UPDATE infractions SET penalty_id = %s WHERE infraction_id = %s;"
             data = [inf_id, pen_id]
             execute_query(db_connection, query, data)
-            msg = "Successfully updated Player: {0}. New Team: {1}".format(pid, tid)
+            msg = "Successfully updated Infraction: {0}. New Penalty: {1}".format(inf_id, pen_id)
         elif req == "remove":
-            pid = request.form["playerID"]
-            query = "DELETE FROM players WHERE player_id= %s"
-            data = [pid]
+            inf_id = request.form["infractionID"]
+            query = "DELETE FROM infractions WHERE infraction_id = %s"
+            data = [inf_id]
             execute_query(db_connection, query, data)
-            msg = "Successfully removed Player: {0}".format(pid)
+            msg = "Successfully removed Infraction: {0}".format(inf_id)
         else:
             msg = "Invalid call (missing add/update/remove)"
 
