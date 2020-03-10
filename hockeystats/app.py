@@ -41,7 +41,7 @@ def teams():
             tn = request.form["teamUpdateName"]
             tid = request.form["teamID"]
 
-            query = "UPDATE team SET team_name= %s WHERE team_id= %s;"
+            query = "UPDATE teams SET team_name= %s WHERE team_id= %s;"
             data = [tn, tid]
             execute_query(db_connection, query, data)
             msg = "Successfully updated Team: {0}. New Name: {1}".format(tn, tid)
