@@ -1,8 +1,23 @@
 from flask import Flask, render_template
-from flask import request, redirect
+from flask import request
 from db_connector.db_connector import connect_to_database, execute_query
+from MySQLdb import DatabaseError, Error, IntegrityError, InternalError, MySQLError
 
 app = Flask(__name__)
+db_connection = connect_to_database()
+
+
+def run_query(query, data, q=True, msg="", html_path=""):
+    try:
+        result = execute_query(db_connection, query, data)
+        if q:
+            return render_template("layouts/main.html",
+                                   body=render_template(html_path, rows=result))
+    except (DatabaseError, Error, IntegrityError, InternalError, MySQLError) as err:
+        msg = err
+
+    return render_template("layouts/main.html",
+                           body=render_template("posts/post_message.html", message=msg))
 
 
 @app.route('/')
@@ -14,60 +29,54 @@ def index():
 @app.route('/teams', methods=['POST', 'GET'])
 def teams():
     print("Querying the database for Teams")
-    db_connection = connect_to_database()
 
     if request.method == 'GET':
         if "searchTeam" in request.args:
             team_name = request.args['searchTeam']
             data = [team_name]
             query = "SELECT team_name FROM teams WHERE team_name = %s;"
-            result = execute_query(db_connection, query, data)
         else:
             query = "SELECT team_id, team_name FROM teams;"
-            result = execute_query(db_connection, query)
+            data = []
+        
+        return run_query(query, data, html_path="teams.html")
 
-        return render_template("layouts/main.html",
-            body=render_template("teams.html", rows=result))
     elif request.method == 'POST':
         req = request.form["action"]
         if req == "add":
-            teamName = request.form['teamName']
-            data = [teamName]
+            team_name = request.form['teamName']
+            data = [team_name]
             query = 'INSERT INTO teams (team_name) VALUES (%s);'
-            execute_query(db_connection, query, data)
-            return render_template("layouts/main.html",
-                                   body=render_template("posts/team_post.html", teamName=teamName))
+            msg = "Successfully added Team: {0}".format(team_name)
         elif req == "update":
             tn = request.form["teamUpdateName"]
             tid = request.form["teamID"]
 
             query = "UPDATE teams SET team_name= %s WHERE team_id= %s;"
             data = [tn, tid]
-            execute_query(db_connection, query, data)
-            msg = "Successfully updated Team: {0}. New Name: {1}".format(tn, tid)
+            msg = "Successfully updated Team: {0}. New Name: {1}".format(tid, tn)
         elif req == "remove":
             tid = request.form["teamID"]
             query = "DELETE FROM teams WHERE team_id= %s;"
             data = [tid]
-            execute_query(db_connection, query, data)
             msg = "Successfully removed Team: {0}".format(tid)
         else:
+            query = ""
+            data = []
             msg = "Invalid call (missing add/update/remove)"
 
-        return render_template("layouts/main.html",
-                               body=render_template("posts/post_message.html", message=msg))
+        return run_query(query, data, q=False, msg=msg)
 
 
 @app.route('/games', methods=['POST', 'GET'])
 def games():
     print("Querying database for Games")
-    db_connection = connect_to_database()
 
     if request.method == 'GET':
         query = "SELECT game_id, home_id, away_id, game_date, game_time FROM games;"
-        result = execute_query(db_connection, query)
-        return render_template("layouts/main.html",
-                               body=render_template("games.html", rows=result))
+  
+        return run_query(query, [], html_path="games.html")
+
     elif request.method == 'POST':
         req = request.form["action"]
         if req == "add":
@@ -79,9 +88,7 @@ def games():
             game_time = date[1]
             query = "INSERT INTO games (home_id, away_id, game_date, game_time) VALUES (%s, %s, %s, %s);"
             data = [home_id, away_id, game_date, game_time]
-            execute_query(db_connection, query, data)
-            return render_template("layouts/main.html",
-                                   body=render_template("posts/game_post.html", data=data))
+            msg = "Successfully added Game: {0} vs {1} at {2} on {3}".format(home_id, away_id, game_time, game_date)
         elif req == "update":
             gid = request.form["gameID"]
             tid1 = request.form["teamUpdate1"]
@@ -89,38 +96,35 @@ def games():
 
             query = "UPDATE games SET home_id= %s, away_id= %s WHERE game_id= %s"
             data = [tid1, tid2, gid]
-            execute_query(db_connection, query, data)
             msg = "Successfully updated Game: {0}. New Teams: {1} vs {2}".format(gid, tid1, tid2)
         elif req == "remove":
             gid = request.form["gameID"]
-            query = "DELETE FROM games WHERE team_id= %s"
+            query = "DELETE FROM games WHERE game_id= %s"
             data = [gid]
-            execute_query(db_connection, query, data)
             msg = "Successfully removed Game: {0}".format(gid)
         else:
+            query = ""
+            data = []
             msg = "Invalid call (missing add/update/remove)"
 
-        return render_template("layouts/main.html",
-                               body=render_template("posts/post_message.html", message=msg))
+        return run_query(query, data, q=False, msg=msg)
 
 
 @app.route('/players', methods=['POST', 'GET'])
 def players():
     print("Querying database for Players")
-    db_connection = connect_to_database()
 
     if request.method == 'GET':
         if "searchPlayer" in request.args:
             number = request.args["searchPlayer"]
             query = "SELECT player_id, fname, lname, number FROM players WHERE number = %s;"
             data = [number]
-            result = execute_query(db_connection, query, data)
         else:
             query = "SELECT player_id, fname, lname, number FROM players;"
-            result = execute_query(db_connection, query)
+            data = []
         
-        return render_template("layouts/main.html",
-                                body=render_template("players.html", rows=result))
+        return run_query(query, data, html_path="players.html")
+
     elif request.method == 'POST':
         req = request.form["action"]
         if req == "add":
@@ -131,7 +135,6 @@ def players():
 
             query = "INSERT INTO players (fname, lname, number, team_id) VALUES (%s, %s, %s, %s);"
             data = [fname, lname, number, team_id]
-            execute_query(db_connection, query, data)
             msg = "Successfully Added: {0} {1}, #{2} on Team {3}".format(fname, lname, number, team_id)
         elif req == "update":
             pid = request.form["playerID"]
@@ -139,38 +142,35 @@ def players():
 
             query = "UPDATE players SET team_id= %s WHERE player_id= %s;"
             data = [tid, pid]
-            execute_query(db_connection, query, data)
             msg = "Successfully updated Player: {0}. New Team: {1}".format(pid, tid)
         elif req == "remove":
             pid = request.form["playerID"]
             query = "DELETE FROM players WHERE player_id= %s"
             data = [pid]
-            execute_query(db_connection, query, data)
             msg = "Successfully removed Player: {0}".format(pid)
         else:
+            query = ""
+            data = []
             msg = "Invalid call (missing add/update/remove)"
 
-        return render_template("layouts/main.html",
-                               body=render_template("posts/post_message.html", message=msg))
+        return run_query(query, data, q=False, msg=msg)
 
 
 @app.route('/penalties', methods=['POST', 'GET'])
 def penalties():
     print("Querying database for Penalties")
-    db_connection = connect_to_database()
 
     if request.method == 'GET':
         query = "SELECT penalty_id, type FROM penalties;"
-        result = execute_query(db_connection, query)
-        return render_template("layouts/main.html",
-                               body=render_template("penalties.html", rows=result))
+
+        return run_query(query, [], html_path="penalties.html")
+
     elif request.method == 'POST':
         req = request.form["action"]
         if req == "add":
             ptype = request.form['penaltyType']
             data = [ptype]
             query = "INSERT INTO penalties (type) VALUES (%s);"
-            execute_query(db_connection, query, data)
             msg = "Successfully Added Penalty: {0}".format(ptype)
         elif req == "update":
             pen_id = request.form["penaltyID"]
@@ -178,31 +178,29 @@ def penalties():
 
             query = "UPDATE penalties SET type = %s WHERE penalty_id = %s;"
             data = [pen_type, pen_id]
-            execute_query(db_connection, query, data)
             msg = "Successfully updated Penalty: {0}. New Type: {1}".format(pen_id, pen_type)
         elif req == "remove":
             pid = request.form["penaltyID"]
             query = "DELETE FROM penalties WHERE penalty_id = %s;"
             data = [pid]
-            execute_query(db_connection, query, data)
             msg = "Successfully removed Penalty: {0}".format(pid)
         else:
+            query = ""
+            data = []
             msg = "Invalid call (missing add/update/remove)"
 
-        return render_template("layouts/main.html",
-                               body=render_template("posts/post_message.html", message=msg))
+        return run_query(query, data, q=False, msg=msg)
 
 
 @app.route('/infractions', methods=['POST', 'GET'])
 def infractions():
     print("Querying database for Infractions")
-    db_connection = connect_to_database()
 
     if request.method == 'GET':
         query = "SELECT infraction_id, player_id, penalty_id FROM infractions;"
-        result = execute_query(db_connection, query)
-        return render_template("layouts/main.html",
-                               body=render_template("infractions.html", rows=result))
+
+        return run_query(query, [], html_path="infractions.html")
+
     elif request.method == 'POST':
         req = request.form["action"]
         if req == "add":
@@ -210,7 +208,6 @@ def infractions():
             penalty_id = request.form['infractionPenaltyIDs']
             data = [player_id, penalty_id]
             query = "INSERT INTO infractions (player_id, penalty_id) VALUES (%s, %s);"
-            execute_query(db_connection, query, data)
             msg = "Successfully Added Infraction. Player {0} contains penality {1}".format(player_id, penalty_id)
         elif req == "update":
             inf_id = request.form["infractionID"]
@@ -218,16 +215,15 @@ def infractions():
 
             query = "UPDATE infractions SET penalty_id = %s WHERE infraction_id = %s;"
             data = [pen_id, inf_id]
-            execute_query(db_connection, query, data)
             msg = "Successfully updated Infraction: {0}. New Penalty: {1}".format(inf_id, pen_id)
         elif req == "remove":
             inf_id = request.form["infractionID"]
             query = "DELETE FROM infractions WHERE infraction_id = %s"
             data = [inf_id]
-            execute_query(db_connection, query, data)
             msg = "Successfully removed Infraction: {0}".format(inf_id)
         else:
+            query = ""
+            data = []
             msg = "Invalid call (missing add/update/remove)"
 
-        return render_template("layouts/main.html",
-                               body=render_template("posts/post_message.html", message=msg))
+        return run_query(query, data, q=False, msg=msg)
