@@ -50,7 +50,11 @@
                             <div class="font-weight-bold">Update Teams</div>
                             <div class="ml-2 mb-2 small">Only add Team ID to remove the team</div>
                             <label for="teamID">Team ID</label>
-                            <input type="text" class="form-control w-50" id="teamID" name="teamID">
+                            <select class="form-control w-50" id="teamID" name="teamID">
+                                {% for r in rows %}
+                                    <option value="{{ r[0] }}">{{ r[1] }}</option>
+                                {% endfor %}
+                            </select>
                             <div>
                                 <label for="teamUpdateName">New Team Name</label>
                                 <input type="text" class="form-control w-50" id="teamUpdateName" name="teamUpdateName">

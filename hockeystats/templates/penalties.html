@@ -44,7 +44,11 @@
                             <div class="font-weight-bold">Update Penalty</div>
                             <div class="ml-2 mb-2 small">Only add Penalty ID to remove the team</div>
                             <label for="penaltyID">Penalty ID</label>
-                            <input type="text" class="form-control w-50" id="penaltyID" name="penaltyID">
+                            <select class="form-control w-50" id="penaltyID" name="penaltyID">
+                                {% for r in rows %}
+                                    <option value="{{ r[0] }}">{{ r[1] }}</option>
+                                {% endfor %}
+                            </select>
                             <div>
                                 <label for="penaltyUpdateType">New Penalty Type</label>
                                 <input type="text" class="form-control w-50" id="penaltyUpdateType" name="penaltyUpdateType">
