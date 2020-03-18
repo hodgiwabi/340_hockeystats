@@ -142,11 +142,13 @@ def players():
             number = request.args["searchPlayer"]
             query = "SELECT player_id, fname, lname, number FROM players WHERE number = %s;"
             data = [number]
+            select = ""
         else:
             query = "SELECT player_id, fname, lname, number FROM players;"
             data = []
+            select = "SELECT team_id, team_name FROM teams;"
         
-        return run_query(query, data, html_path="players.html")
+        return run_query(query, data, sel=select, html_path="players.html")
 
     elif request.method == 'POST':
         req = request.form["action"]
