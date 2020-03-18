@@ -4,11 +4,11 @@ from db_connector.db_connector import connect_to_database, execute_query
 from MySQLdb import DatabaseError, Error, IntegrityError, InternalError, MySQLError
 
 app = Flask(__name__)
-db_connection = connect_to_database()
 
 
 def run_query(query, data, q=True, msg="", html_path=""):
     try:
+        db_connection = connect_to_database()
         result = execute_query(db_connection, query, data)
         if q:
             return render_template("layouts/main.html",
