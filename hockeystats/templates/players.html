@@ -16,9 +16,9 @@
     <div class="list-group">
         {% for r in rows %}
             <div class="list-item">
-                <a href="#" class="list-group-item list-group-item-action">
+                <div class="list-group-item list-group-item-action">
                     ({{ r[0] }}) {{r[1]}} {{ r[2] }} - #{{ r[3] }}
-                </a>
+                </div>
             </div>
         {% endfor %}
     </div>
@@ -52,7 +52,11 @@
                                 </div>
                                 <div class="ml-1">
                                     <label for="playerTeam">Team ID</label>
-                                    <input type="text" class="form-control" id="playerTeam" name="playerTeam">
+                                    <select class="form-control" id="playerTeam" name="playerTeam">
+                                        {% for d in data %}
+                                            <option value="{{ d[0] }}">{{ d[1] }}</option>
+                                        {% endfor %}
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -63,10 +67,18 @@
                             <div class="font-weight-bold">Update Player</div>
                             <div class="ml-2 mb-2 small">Only add Player ID to remove the team</div>
                             <label for="playerID">Player ID</label>
-                            <input type="text" class="form-control w-50" id="playerID" name="playerID">
+                            <select class="form-control w-50" id="playerID" name="playerID">
+                                {% for r in rows %}
+                                    <option value="{{ r[0] }}">{{r[1]}} {{ r[2] }}</option>
+                                {% endfor %}
+                            </select>
                             <div>
                                 <label for="playerUpdateTeamID">New Team ID</label>
-                                <input type="text" class="form-control w-50" id="playerUpdateTeamID" name="playerUpdateTeamID">
+                                <select class="form-control w-50" id="playerUpdateTeamID" name="playerUpdateTeamID">
+                                    {% for d in data %}
+                                        <option value="{{ d[0] }}">{{ d[1] }}</option>
+                                    {% endfor %}
+                                </select>
                             </div>
                         </div>
                     </form>
