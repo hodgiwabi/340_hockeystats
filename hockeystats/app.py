@@ -6,15 +6,20 @@ from MySQLdb import DatabaseError, Error, IntegrityError, InternalError, MySQLEr
 app = Flask(__name__)
 
 
-def run_query(query, data, q=True, sel="", msg="", html_path=""):
+def run_query(query, data, q=True, sel="", sel2="", msg="", html_path=""):
     try:
         db_connection = connect_to_database()
         result = execute_query(db_connection, query, data)
         if q:
             if sel:
                 select = execute_query(db_connection, sel, [])
+                if sel2:
+                    select2 = execute_query(db_connection, sel2, [])
+                    return render_template("layouts/main.html",
+                                           body=render_template(html_path, rows=result, data=select, data2=select2))
                 return render_template("layouts/main.html",
                                    body=render_template(html_path, rows=result, data=select))
+
 
             return render_template("layouts/main.html",
                                    body=render_template(html_path, rows=result))
@@ -215,9 +220,25 @@ def infractions():
     print("Querying database for Infractions")
 
     if request.method == 'GET':
-        query = "SELECT infraction_id, player_id, penalty_id FROM infractions;"
+        query = """
+SELECT player.infraction_id, player.fname, player.lname, player.number, player.team_name, type FROM
+    (
+        SELECT infraction_id, p.fname, p.lname, p.number, t.team_name FROM infractions
+        JOIN players p on infractions.player_id = p.player_id
+        JOIN teams t on p.team_id = t.team_id
+    ) AS player
+    JOIN
+    (
+        SELECT infraction_id, p2.type FROM infractions
+        JOIN penalties p2 on infractions.penalty_id = p2.penalty_id
+    ) AS penalty
+    WHERE player.infraction_id = penalty.infraction_id;
+        """
 
-        return run_query(query, [], html_path="infractions.html")
+        select = "SELECT player_id, fname, lname, number FROM players;"
+        select2 = "SELECT penalty_id, type FROM penalties;"
+
+        return run_query(query, [], sel=select, sel2=select2, html_path="infractions.html")
 
     elif request.method == 'POST':
         req = request.form["action"]

@@ -37,7 +37,18 @@ SELECT player_id, fname, lname, number FROM players;
 
 SELECT penalty_id, type FROM penalties;
 
-SELECT infraction_id, player_id, penalty_id FROM infractions;
+SELECT player.infraction_id, player.fname, player.lname, player.number, player.team_name, type FROM
+    (
+        SELECT infraction_id, p.fname, p.lname, p.number, t.team_name FROM infractions
+        JOIN players p on infractions.player_id = p.player_id
+        JOIN teams t on p.team_id = t.team_id
+    ) AS player
+    JOIN
+    (
+        SELECT infraction_id, p2.type FROM infractions
+        JOIN penalties p2 on infractions.penalty_id = p2.penalty_id
+    ) AS penalty
+    WHERE player.infraction_id = penalty.infraction_id;
 
 -- UPDATE Functionality
 

@@ -10,7 +10,7 @@
         {% for r in rows %}
             <div class="list-item">
                 <a href="#" class="list-group-item list-group-item-action">
-                    ({{r[0]}}) {{r[1]}}: {{r[2]}}
+                    ({{r[0]}}) {{ r[5] }} penalty on {{ r[1] }} {{ r[2] }}  #{{ r[3] }} (team {{ r[4] }})
                 </a>
             </div>
         {% endfor %}
@@ -32,12 +32,20 @@
                             <div class="font-weight-bold">Add Infractions</div>
                             <div class="d-inline-flex">
                                 <div class="ml-1">
-                                    <label for="infractionPlayerID">Player ID</label>
-                                    <input type="text" class="form-control" id="infractionPlayerID" name="infractionPlayerID">
+                                    <label for="infractionPlayerID">Player</label>
+                                    <select class="form-control" id="infractionPlayerID" name="infractionPlayerID">
+                                        {% for d in data %}
+                                            <option value="{{ d[0] }}">{{ d[1] }} {{ d[2] }}</option>
+                                        {% endfor %}
+                                    </select>
                                 </div>
                                 <div class="ml-1">
-                                    <label for="infractionPenaltyID">Penalty ID</label>
-                                    <input type="text" class="form-control" id="infractionPenaltyID" name="infractionPenaltyIDs">
+                                    <label for="infractionPenaltyID">Penalty</label>
+                                    <select class="form-control" id="infractionPenaltyID" name="infractionPenaltyIDs">
+                                        {% for d in data2 %}
+                                            <option value="{{ d[0] }}">{{ d[1] }}</option>
+                                        {% endfor %}
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -48,10 +56,18 @@
                             <div class="font-weight-bold">Update Infraction</div>
                             <div class="ml-2 mb-2 small">Only add Infraction ID to remove the team</div>
                             <label for="infractionID">Infraction ID</label>
-                            <input type="text" class="form-control w-50" id="infractionID" name="infractionID">
+                            <select class="form-control w-50" id="infractionID" name="infractionID">
+                                {% for r in rows %}
+                                    <option value="{{ r[0] }}">{{ r[5] }}: {{ r[1] }} {{ r[2] }}</option>
+                                {% endfor %}
+                            </select>
                             <div>
                                 <label for="infractionUpdatePenalty">New Penalty ID</label>
-                                <input type="text" class="form-control w-50" id="infractionUpdatePenalty" name="infractionUpdatePenalty">
+                                <select class="form-control w-50" id="infractionUpdatePenalty" name="infractionUpdatePenalty">
+                                    {% for d in data2 %}
+                                        <option value="{{ d[0] }}">{{ d[1] }}</option>
+                                    {% endfor %}
+                                </select>
                             </div>
                         </div>
                     </form>
