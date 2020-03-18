@@ -44,12 +44,20 @@
                   <div class="d-inline-flex">
                       <div class="ml-1">
                           <label for="teamAdd1">Team #1</label>
-                          <input type="text" class="form-control" id="teamAdd1" name="teamAdd1">
+                          <select class="form-control" id="teamAdd1" name="teamAdd1">
+                              {%  for d in data %}
+                                  <option value="{{ d[0] }}">{{ d[1] }}</option>
+                              {% endfor %}
+                          </select>
                       </div>
 
                       <div class="ml-1">
                           <label for="teamAdd2">Team #2</label>
-                          <input type="text" class="form-control" id="teamAdd2" name="teamAdd2">
+                          <select class="form-control" id="teamAdd2" name="teamAdd2">
+                              {%  for d in data %}
+                                  <option value="{{ d[0] }}">{{ d[1] }}</option>
+                              {% endfor %}
+                          </select>
                       </div>
                   </div>
                   <div class="ml-1">
@@ -64,17 +72,29 @@
                     <div class="font-weight-bold">Update Games</div>
                     <div class="ml-2 mb-2 small">Only add Game ID to remove the game</div>
                     <label for="gameID">Game ID</label>
-                    <input type="text" class="form-control w-50" id="gameID" name="gameID">
+                    <select class="form-control w-50" id="gameID" name="gameID">
+                        {%  for r in rows %}
+                            <option value="{{ r[0] }}">{{r[1]}} vs {{r[2]}} - {{r[4]}}</option>
+                        {% endfor %}
+                    </select>
 
                     <div class="d-inline-flex">
                         <div>
                             <label for="teamUpdate1">Team #1</label>
-                            <input type="text" class="form-control" id="teamUpdate1" name="teamUpdate1">
+                            <select class="form-control" id="teamUpdate1" name="teamUpdate1">
+                                {%  for d in data %}
+                                    <option value="{{ d[0] }}">{{ d[1] }}</option>
+                                {% endfor %}
+                            </select>
                         </div>
 
                         <div class="ml-1">
                             <label for="teamUpdate2">Team #2</label>
-                            <input type="text" class="form-control" id="teamUpdate2" name="teamUpdate2">
+                            <select class="form-control" id="teamUpdate2" name="teamUpdate2">
+                                {%  for d in data %}
+                                    <option value="{{ d[0] }}">{{ d[1] }}</option>
+                                {% endfor %}
+                            </select>
                         </div>
                     </div>
                 </div>

@@ -6,11 +6,16 @@ from MySQLdb import DatabaseError, Error, IntegrityError, InternalError, MySQLEr
 app = Flask(__name__)
 
 
-def run_query(query, data, q=True, msg="", html_path=""):
+def run_query(query, data, q=True, sel="", msg="", html_path=""):
     try:
         db_connection = connect_to_database()
         result = execute_query(db_connection, query, data)
         if q:
+            if sel:
+                select = execute_query(db_connection, sel, [])
+                return render_template("layouts/main.html",
+                                   body=render_template(html_path, rows=result, data=select))
+
             return render_template("layouts/main.html",
                                    body=render_template(html_path, rows=result))
     except (DatabaseError, Error, IntegrityError, InternalError, MySQLError) as err:
@@ -73,9 +78,22 @@ def games():
     print("Querying database for Games")
 
     if request.method == 'GET':
-        query = "SELECT game_id, home_id, away_id, game_date, game_time FROM games;"
+        query = """
+SELECT home.game_id, home.team_name, away.team_name, home.game_date, home.game_time FROM
+    (
+        SELECT game_id, t.team_name, game_date, game_time  FROM games
+        JOIN teams t on games.home_id = t.team_id
+    ) AS home
+    JOIN
+    (
+        SELECT game_id, t.team_name FROM games
+        JOIN teams t on games.away_id = t.team_id
+    ) AS away
+    WHERE home.game_id = away.game_id;"""
+
+        select = "SELECT team_id, team_name FROM teams;"
   
-        return run_query(query, [], html_path="games.html")
+        return run_query(query, [], sel=select, html_path="games.html")
 
     elif request.method == 'POST':
         req = request.form["action"]
