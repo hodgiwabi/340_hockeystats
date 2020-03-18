@@ -21,7 +21,17 @@ INSERT INTO infractions (player_id, penalty_id) VALUES
 
 SELECT team_id, team_name FROM teams;
 
-SELECT game_id, home_id, away_id, game_date, game_time FROM games;
+SELECT home.game_id, home.team_name, away.team_name, home.game_date, home.game_time FROM
+    (
+        SELECT game_id, t.team_name, game_date, game_time  FROM games
+        JOIN teams t on games.home_id = t.team_id
+    ) AS home
+    JOIN
+    (
+        SELECT game_id, t.team_name FROM games
+        JOIN teams t on games.away_id = t.team_id
+    ) AS away
+    WHERE home.game_id = away.game_id;
 
 SELECT player_id, fname, lname, number FROM players;
 
