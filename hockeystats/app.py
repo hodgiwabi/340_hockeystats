@@ -6,20 +6,19 @@ from MySQLdb import DatabaseError, Error, IntegrityError, InternalError, MySQLEr
 app = Flask(__name__)
 
 
-def run_query(query, data, q=True, sel="", sel2="", msg="", html_path=""):
+def run_query(query, data, q=True, sel="", data2=[], sel2="", msg="", html_path=""):
     try:
         db_connection = connect_to_database()
         result = execute_query(db_connection, query, data)
         if q:
             if sel:
-                select = execute_query(db_connection, sel, [])
+                select = execute_query(db_connection, sel, data2)
                 if sel2:
                     select2 = execute_query(db_connection, sel2, [])
                     return render_template("layouts/main.html",
                                            body=render_template(html_path, rows=result, data=select, data2=select2))
                 return render_template("layouts/main.html",
                                    body=render_template(html_path, rows=result, data=select))
-
 
             return render_template("layouts/main.html",
                                    body=render_template(html_path, rows=result))
@@ -44,12 +43,17 @@ def teams():
         if "searchTeam" in request.args:
             team_name = request.args['searchTeam']
             data = [team_name]
-            query = "SELECT team_name FROM teams WHERE team_name = %s;"
+            select = "SELECT team_name FROM teams WHERE team_name = %s LIMIT 1;"
+            query = """
+SELECT fname, lname, number FROM players
+    JOIN teams t on players.team_id = t.team_id
+    WHERE t.team_name = %s"""
+
+            return run_query(query, data, sel=select, data2=data, html_path="team_players.html")
         else:
             query = "SELECT team_id, team_name FROM teams;"
             data = []
-        
-        return run_query(query, data, html_path="teams.html")
+            return run_query(query, data, html_path="teams.html")
 
     elif request.method == 'POST':
         req = request.form["action"]

@@ -1,0 +1,18 @@
+<div id="player-container" class="container">
+
+    {% for d in data %}
+        <h1>Team: {{ d[0] }}</h1>
+    {% endfor %}
+
+    <h3>Players:</h3>
+    <div class="list-group">
+        {% for r in rows %}
+            <div class="list-item">
+                <div class="list-group-item list-group-item-action">
+                    {{ r[0] }} {{ r[1] }} - #{{ r[2] }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+</div>
